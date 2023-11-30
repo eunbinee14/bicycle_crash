@@ -60,3 +60,6 @@ df_encoded = pd.get_dummies(df, columns=['가해차종', '피해차종','가해�
 
 # 결과 출력
 print(df_encoded)
+
+# 새로운 데이터 csv 파일로 형성
+df_encoded.to_csv('전처리후데이터.csv', index=False)
