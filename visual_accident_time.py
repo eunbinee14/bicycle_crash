@@ -12,7 +12,7 @@ data['사고일시'] = pd.to_datetime(data['사고일시'])
 # 시간대별 사고 개수 계산
 accident_count = data.groupby(data['사고일시'].dt.strftime('%H:%M:%S')).size().reset_index(name='accident_count')
 
-#print(accident_count)
+print(accident_count)
 
 # 시간대별 사고 횟수 플랏
 plt.figure(figsize=(30, 8))
