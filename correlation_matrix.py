@@ -14,7 +14,7 @@ data.info()
 
 ## 상관관계 분석 시각화 - heatmap ##
 # 가해자법규위반 -> 500건 이상만 상관관계 분석에 이용
-# 가해차종, 피해차종 -> 자전거 & 보행자 관련된 변수만 선택
+# 가해차종, 피해차종 -> 주제에 맞춰서 자전거 & 보행자 관련된 변수만 선택
 # 사고유형 다 넣기
 # Y : 사고등급
 
@@ -41,9 +41,10 @@ print(corr)
 # heatmap 그리기
 fig= plt.figure(figsize=(16, 12))
 ax = fig.gca()
-#
+
 # heatmap 안의 font-size 설정
 sns.set(font_scale = 1.0)
+# 상관계수가 첫 번째 변수에만 나타나서 우선 히트맵에 상관계수 수치가 나오지 않도록 설정
 heatmap = sns.heatmap(corr, annot=False, fmt='.2f', annot_kws={'size': 15},
                       yticklabels=cols, xticklabels=cols, cmap="RdYlBu")
 
