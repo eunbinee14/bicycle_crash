@@ -25,7 +25,7 @@ selected_columns=['사고등급', '가해자연령', '기상상태', '가해차�
 data_subset = data[selected_columns]
 
 
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 
 # 독립변수
 X=data_subset.drop('사고등급', axis=1)
@@ -36,16 +36,86 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 X_train.info()
 
-# KNN모델
-#model=
-# 정확도 계산
-#accuracy = model.score(X_test, y_test)
-#print("모델 정확도: ", accuracy)
 
-# 다중공산성
-from statsmodels.stats import outliers_influence
+# KNN
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
 
-vif = pd.DataFrame()
-vif['features'] = X_train.columns
-vif['VIF Factor'] = [outliers_influence.variance_inflation_factor(X_train.values, i) for i in range(X_train.shape[1])]
-vif.round(1)
+# KNN 생성
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+
+# 예측
+y_pred = knn.predict(X_test)
+
+# 정확도 평가
+print(confusion_matrix(y_test, y_pred))
+print('KNN 정확도:', end=' ')
+print(metrics.accuracy_score(y_test, y_pred))
+
+# cross validation of knn
+acc_knn=cross_val_score(knn, X, y, cv=10)
+print('KNN cv:', end=' ')
+print(acc_knn.mean())
+
+
+# Logistic Regression
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+# 특성 스케일링
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# 로지스틱 회귀 모델 생성
+model_logist = LogisticRegression(max_iter=1000)
+model_logist.fit(X_train, y_train)
+
+# 정확도 계산1-model instance method
+acuuracy1=model_logist.score(X_test, y_test)
+print('로지스틱회귀 정확도1:', end=' ')
+print(acuuracy1)
+
+# 정확도 계산2-예측
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
+
+y_pred = model_logist.predict(X_test)
+
+accuracy2 = metrics.accuracy_score(y_test, y_pred)
+print('로지스틱회귀 정확도2:', end=' ')
+print(accuracy2)
+
+# cross validation of logistic-안돼
+#acc_logist=cross_val_score(model_logist, X, y, cv=10)
+#print(acc_logist.mean())
+
+# SVM
+from sklearn import svm
+
+# SVM 모델 생성1
+model_svm = svm.SVC(kernel='rbf')
+# 모델 학습
+model_svm.fit(X_train, y_train)
+
+# 예측
+y_pred = model_svm.predict(X_test)
+
+# 정확도 평가
+print('SVM 정확도1:', end=' ')
+print(metrics.accuracy_score(y_test, y_pred))
+
+
+# SVM 모델 생성2
+model_svm2 = svm.SVC(kernel='linear')
+# 모델 학습
+model_svm2.fit(X_train, y_train)
+
+# 예측
+y_pred = model_svm2.predict(X_test)
+
+# 정확도 평가
+print('SVM 정확도2:', end=' ')
+print(metrics.accuracy_score(y_test, y_pred))
