@@ -7,7 +7,7 @@ data.info()
 data.columns
 
 # 필요한 열만 선택
-# '사고일시', '피해차종' 제외
+# '사고일시' 제외
 selected_columns=['사고등급', '가해자연령', '기상상태', '가해차종_개인형이동수단(PM)', '가해차종_건설기계', '가해차종_기타', '가해차종_농기계', '가해차종_불명',
                   '가해차종_사륜오토바이(ATV)', '가해차종_승용차', '가해차종_승합차', '가해차종_원동기장치자전거', '가해차종_이륜차',
       '가해차종_자전거', '가해차종_특수차', '가해차종_화물차', '피해차종_개인형이동수단(PM)', '피해차종_건설기계',
@@ -83,7 +83,6 @@ print(acuuracy1)
 
 # 정확도 계산2-예측
 from sklearn import metrics
-from sklearn.metrics import confusion_matrix
 
 y_pred = model_logist.predict(X_test)
 
