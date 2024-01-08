@@ -1,4 +1,5 @@
-# bicycle_crash 4조
+# python_datascience_class bicycle_crash 4조
+- 2023년 파이썬을이용한데이터사이언스 수업 내의 디벨롭 레포지토리입니다.
 
 ## Topic : 한강변 충돌 사고로 인해 발생한 사고 등급 예측
 
